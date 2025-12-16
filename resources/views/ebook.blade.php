@@ -203,7 +203,7 @@
                 <p class="text-muted">Download immediately after purchase. No waiting, no shipping.</p>
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="feature-card">
                 <div class="feature-icon">
@@ -213,7 +213,7 @@
                 <p class="text-muted">Your library syncs across all your devices automatically.</p>
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="feature-card">
                 <div class="feature-icon">
@@ -223,7 +223,7 @@
                 <p class="text-muted">Highlight, annotate, and search within your e-books.</p>
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="feature-card">
                 <div class="feature-icon">
@@ -265,29 +265,29 @@
                     <i class="far fa-heart"></i>
                 </button>
                 <span class="ebook-badge">E-BOOK</span>
-                
+
                 <a href="{{ route('books.show', $book->id) }}">
-                    <img src="{{ asset('images/books/' . $book->image) }}" 
-                         alt="{{ $book->title }}" 
+                    <img src="{{ $book->image_url }}"
+                         alt="{{ $book->title }}"
                          class="book-image"
                          onerror="this.src='https://via.placeholder.com/300x400/3498DB/FFFFFF?text=E-Book'">
                 </a>
-                
+
                 <h5 class="book-title mt-3">{{ $book->title }}</h5>
                 <p class="book-author">By: {{ $book->author }}</p>
-                
+
                 <div class="book-rating">
                     <i class="fas fa-star"></i>
                     <span>{{ number_format($book->rating, 1) }}</span>
                     <span class="text-muted ms-2">({{ rand(50, 500) }} reviews)</span>
                 </div>
-                
+
                 <div class="format-tags">
                     <span class="format-tag"><i class="fas fa-file-pdf"></i> PDF</span>
                     <span class="format-tag"><i class="fas fa-book"></i> EPUB</span>
                     <span class="format-tag"><i class="fab fa-amazon"></i> MOBI</span>
                 </div>
-                
+
                 <div class="price-section mt-3">
                     <div>
                         <div class="original-price">${{ number_format($book->price, 2) }}</div>
@@ -308,7 +308,7 @@
         </div>
         @endforeach
     </div>
-    
+
     <!-- Pagination -->
     <div class="d-flex justify-content-center mt-4">
         {{ $books->links() }}
@@ -344,7 +344,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="accordion-item mb-3" style="border: none; border-radius: 10px;">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
@@ -357,7 +357,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="accordion-item mb-3" style="border: none; border-radius: 10px;">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
@@ -370,7 +370,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="accordion-item" style="border: none; border-radius: 10px;">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">

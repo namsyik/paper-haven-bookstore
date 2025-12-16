@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Paper Haven - Your Literary Journey')</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+
     <!-- Custom CSS -->
     <style>
         :root {
@@ -453,7 +453,7 @@
             .navbar-brand {
                 font-size: 1.5rem;
             }
-            
+
             .search-box {
                 max-width: 100%;
                 margin: 1rem 0;
@@ -469,11 +469,11 @@
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">Paper Haven</a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
@@ -497,14 +497,14 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('cart.index') ? 'active' : '' }}" href="{{ route('cart.index') }}">My cart</a>
                     </li>
-                    
+
                     <!-- Search Icon -->
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#searchModal">
                             <i class="fas fa-search"></i>
                         </a>
                     </li>
-                    
+
                     <!-- Language Selector -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -515,7 +515,7 @@
                             <li><a class="dropdown-item" href="#">Indonesian</a></li>
                         </ul>
                     </li>
-                    
+
                     <!-- Cart Icon -->
                     <li class="nav-item ms-2">
                         <a href="{{ route('cart.index') }}" class="cart-icon">
@@ -523,7 +523,7 @@
                             <span class="cart-badge" id="cartCount">0</span>
                         </a>
                     </li>
-                    
+
                     <!-- User Avatar -->
                     <li class="nav-item ms-2">
                         <img src="https://ui-avatars.com/api/?name=User&background=8B6F47&color=fff" alt="User" class="user-avatar">
@@ -591,7 +591,7 @@
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
@@ -602,7 +602,7 @@
                         <li class="mb-2"><a href="#">Contact</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Categories</h5>
                     <ul class="list-unstyled">
@@ -612,7 +612,7 @@
                         <li class="mb-2"><a href="#">Biography</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Contact Info</h5>
                     <ul class="list-unstyled">
@@ -622,9 +622,9 @@
                     </ul>
                 </div>
             </div>
-            
+
             <hr style="border-color: rgba(255,255,255,0.1);">
-            
+
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
                     <p class="mb-0">&copy; 2024 Paper Haven. All rights reserved.</p>
@@ -639,7 +639,7 @@
 
     <!-- Bootstrap JS -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -662,20 +662,20 @@
             $('.alert').fadeOut('slow');
         }, 5000);
 
-        // Advanced Image Loading with Multiple Fallbacks  
+        // Advanced Image Loading with Multiple Fallbacks
         document.addEventListener('DOMContentLoaded', function() {
             const images = document.querySelectorAll('img[data-isbn]');
-            
+
             images.forEach(img => {
                 const isbn = img.dataset.isbn;
                 const title = img.dataset.title || '';
-                
+
                 // Try multiple sources in order
                 const sources = [
                     `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`,
                     generateFallbackUrl(title, isbn)
                 ];
-                
+
                 tryLoadImage(img, sources, 0);
             });
         });
@@ -685,7 +685,7 @@
                 img.src = generateFallbackUrl(img.dataset.title, img.dataset.isbn);
                 return;
             }
-            
+
             const tempImg = new Image();
             tempImg.onload = function() {
                 if (this.width > 100 && this.height > 100) {
@@ -775,10 +775,10 @@
                     icon.classList.add('far');
                     button.classList.remove('active');
                 }
-                
+
                 // Update wishlist count
                 updateWishlistCount();
-                
+
                 // Show feedback
                 showToast(data.message);
             })
@@ -806,7 +806,7 @@
                 animation: slideUp 0.3s ease;
             `;
             document.body.appendChild(toast);
-            
+
             setTimeout(() => {
                 toast.style.animation = 'slideDown 0.3s ease';
                 setTimeout(() => toast.remove(), 300);

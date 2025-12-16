@@ -74,4 +74,25 @@ class Book extends Model
     {
         return '$' . number_format($this->price, 2);
     }
+
+    public function getImageUrlAttribute(): string
+    {
+        if ($this->image) {
+            // // If image path starts with 'http', it's an external URL
+            // if (str_starts_with($this->image, 'http')) {
+            //     return $this->image;
+            // }
+
+            // If image path starts with 'images/', it's already a path
+            if (str_starts_with($this->image, 'images/')) {
+                return asset($this->image);
+            }
+
+            // Otherwise, assume it's just a filename in public/images/
+            return asset('images/' . $this->image);
+        }
+
+        // Fallback to placeholder with book title
+        return 'https://via.placeholder.com/300x450/8B6F47/FFFFFF?text=' . urlencode(substr($this->title, 0, 20));
+    }
 }
