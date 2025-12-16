@@ -4,6 +4,14 @@
 
 @push('styles')
 <style>
+    .book-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
     .ebook-header {
         background: linear-gradient(135deg, #2C3E50 0%, #3498DB 100%);
         padding: 5rem 0;
@@ -69,7 +77,7 @@
     .ebook-badge {
         position: absolute;
         top: 15px;
-        right: 15px;
+        right: 55px;
         background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%);
         color: white;
         padding: 0.4rem 1rem;

@@ -148,7 +148,8 @@
     <div class="row">
         <!-- Product Image -->
         <div class="col-lg-5">
-            <img src="{{ asset('images/books/' . $book->image) }}" alt="{{ $book->title }}" class="product-image" data-isbn="{{ $book->isbn }}" data-title="{{ $book->title }}" onerror="this.src='https://placehold.co/400x600/8B6F47/ffffff?text=Book+Cover'">
+            <img src="{{ $book->image_url }}" alt="{{ $book->title }}" class="product-image"
+            onerror="this.src='https://via.placeholder.com/300x400/3498DB/FFFFFF?text=E-Book'">
         </div>
         
         <!-- Product Info -->

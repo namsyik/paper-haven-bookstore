@@ -4,6 +4,14 @@
 
 @push('styles')
     <style>
+        .book-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
         .heart-btn {
             position: absolute;
             top: 10px;
@@ -56,14 +64,6 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 0.5rem 1rem;
-        }
-
-        .book-image {
-            width: 260px;
-            height: 360px;
-            object-fit: fill;
-            border-radius: 10px;
-            margin-bottom: 1rem;
         }
     </style>
 @endpush

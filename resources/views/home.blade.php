@@ -141,7 +141,7 @@
 
         .book-image {
             width: 100%;
-            height: 280px;
+            height: 400px;
             object-fit: cover;
             border-radius: 10px;
             margin-bottom: 1rem;
@@ -317,7 +317,7 @@
                         <div class="author-card">
                             <img src="https://ui-avatars.com/api/?name=James+Clear&size=100&background=8B6F47&color=fff"
                                 alt="James Clear" class="author-avatar">
-                            <p class="author-name">Latest form James clear <i class="fas fa-chevron-right"></i></p>
+                            <p class="author-name">Latest from James clear <i class="fas fa-chevron-right"></i></p>
                         </div>
                     </div>
                 @endif
@@ -327,7 +327,7 @@
                         <div class="author-card">
                             <img src="https://ui-avatars.com/api/?name=Napoleon+Hill&size=100&background=8B6F47&color=fff"
                                 alt="Napoleon Hill" class="author-avatar">
-                            <p class="author-name">Latest form Napoleon Hill <i class="fas fa-chevron-right"></i></p>
+                            <p class="author-name">Latest from Napoleon Hill <i class="fas fa-chevron-right"></i></p>
                         </div>
                     </div>
                 @endif
@@ -337,7 +337,7 @@
                         <div class="author-card">
                             <img src="https://ui-avatars.com/api/?name=Robert+Kiyosaki&size=100&background=8B6F47&color=fff"
                                 alt="Robert Kiyosaki" class="author-avatar">
-                            <p class="author-name">Latest form Robert Kiyosaki <i class="fas fa-chevron-right"></i></p>
+                            <p class="author-name">Latest from Robert Kiyosaki <i class="fas fa-chevron-right"></i></p>
                         </div>
                     </div>
                 @endif
@@ -347,7 +347,7 @@
                         <div class="author-card">
                             <img src="https://ui-avatars.com/api/?name=Brian+Tracy&size=100&background=8B6F47&color=fff"
                                 alt="Brian Tracy" class="author-avatar">
-                            <p class="author-name">Latest form Brian Tracy <i class="fas fa-chevron-right"></i></p>
+                            <p class="author-name">Latest from Brian Tracy <i class="fas fa-chevron-right"></i></p>
                         </div>
                     </div>
                 @endif
