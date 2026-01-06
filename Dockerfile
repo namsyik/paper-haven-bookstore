@@ -16,17 +16,11 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Enable Apache modules
-RUN a2enmod rewrite headers
-
 # Set working directory
 WORKDIR /var/www/html
 
 # Copy application files
 COPY . /var/www/html
-
-# Copy Apache configuration
-COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
@@ -47,7 +41,7 @@ RUN php artisan config:cache && \
     php artisan view:cache
 
 # Expose port
-EXPOSE 80
+EXPOSE 8000
 
 # Start PHP built-in server
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
