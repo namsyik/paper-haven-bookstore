@@ -31,56 +31,80 @@ RUN mkdir -p storage/framework/{sessions,views,cache} \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Configure Apache to listen on PORT environment variable
-RUN echo 'Listen ${PORT:-80}' > /etc/apache2/ports.conf
+# Create startup script with proper PORT handling
+RUN cat > /start.sh <<'STARTSCRIPT'
+#!/bin/bash
+set -e
 
-# Configure Apache VirtualHost to use PORT
-RUN echo '<VirtualHost *:${PORT:-80}>\n\
-    ServerAdmin admin@paperhaven.com\n\
-    DocumentRoot /var/www/html/public\n\
-    \n\
-    <Directory /var/www/html/public>\n\
-        Options Indexes FollowSymLinks\n\
-        AllowOverride All\n\
-        Require all granted\n\
-    </Directory>\n\
-    \n\
-    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
-    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+# Get PORT from environment (Railway provides this dynamically)
+PORT=${PORT:-80}
+
+echo "========================================"
+echo "Paper Haven Bookstore - Starting"
+echo "========================================"
+echo "PORT: $PORT"
+echo ""
+
+# Configure Apache to listen on the correct port
+echo "Configuring Apache..."
+echo "Listen $PORT" > /etc/apache2/ports.conf
+
+# Create VirtualHost configuration with the dynamic port
+cat > /etc/apache2/sites-available/000-default.conf <<VHOST
+<VirtualHost *:$PORT>
+    ServerAdmin admin@paperhaven.com
+    DocumentRoot /var/www/html/public
+
+    <Directory /var/www/html/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+VHOST
 
 # Enable the site
-RUN a2ensite 000-default
+a2ensite 000-default > /dev/null 2>&1
 
-# Create startup script
-RUN echo '#!/bin/bash\n\
-set -e\n\
-\n\
-echo "========================================"\n\
-echo "Starting Paper Haven Bookstore"\n\
-echo "========================================"\n\
-echo "PORT is set to: ${PORT:-80}"\n\
-echo ""\n\
-\n\
-# Cache configuration\n\
-echo "Caching configuration..."\n\
-php artisan config:cache\n\
-\n\
-# Run migrations\n\
-echo "Running migrations..."\n\
-php artisan migrate --force\n\
-\n\
-echo ""\n\
-echo "Starting Apache on port ${PORT:-80}..."\n\
-echo "========================================"\n\
-\n\
-# Start Apache\n\
-exec apache2-foreground' > /start.sh && chmod +x /start.sh
+echo "Apache configured for port $PORT"
+echo ""
+
+# Laravel setup
+echo "Setting up Laravel..."
+
+# Cache configuration
+if php artisan config:cache 2>/dev/null; then
+    echo "✓ Configuration cached"
+else
+    echo "⚠ Config cache skipped"
+fi
+
+# Run migrations
+echo "Running migrations..."
+if php artisan migrate --force 2>&1; then
+    echo "✓ Migrations completed"
+else
+    echo "⚠ Migrations failed (may be expected on first run)"
+fi
+
+echo ""
+echo "========================================"
+echo "Starting Apache on 0.0.0.0:$PORT"
+echo "========================================"
+echo ""
+
+# Start Apache
+exec apache2-foreground
+STARTSCRIPT
+
+# Make startup script executable
+RUN chmod +x /start.sh
 
 # Expose port
-EXPOSE ${PORT:-80}
+EXPOSE 80
 
-RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf
-
-# Start Apache with startup script
+# Start with our script
 CMD ["/start.sh"]
