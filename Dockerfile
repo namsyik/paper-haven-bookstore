@@ -1,4 +1,6 @@
+ARG CACHEBUST=1
 FROM php:8.2-apache
+RUN echo "cache bust $CACHEBUST"
 
 # Disable all MPMs first, then enable only one
 RUN a2dismod mpm_event mpm_worker mpm_prefork || true
