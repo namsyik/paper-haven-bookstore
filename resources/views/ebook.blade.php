@@ -298,10 +298,8 @@
 
                 <div class="price-section mt-3">
                     <div>
-                        <div class="original-price">${{ number_format($book->price, 2) }}</div>
                         <div class="ebook-price">
-                            ${{ number_format($book->price * 0.7, 2) }}
-                            <span class="discount-badge ms-2">30% OFF</span>
+                            ${{ $book->price * 0.7, 2}}
                         </div>
                     </div>
                     <form action="{{ route('cart.add', $book->id) }}" method="POST">
@@ -319,7 +317,7 @@
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center mt-4">
-        {{ $books->links() }}
+        {{ $books->links('pagination::bootstrap-4') }}
     </div>
 </section>
 
