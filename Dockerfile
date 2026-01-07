@@ -1,7 +1,13 @@
 FROM php:8.2-apache
 
-# Enable rewrite (MPM prefork SUDAH aktif by default)
-RUN a2enmod rewrite
+# 🔥 FORCE remove conflicting MPM modules
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.load \
+          /etc/apache2/mods-enabled/mpm_event.conf \
+          /etc/apache2/mods-enabled/mpm_worker.load \
+          /etc/apache2/mods-enabled/mpm_worker.conf
+
+# Enable required modules
+RUN a2enmod rewrite mpm_prefork
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -12,20 +18,14 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www/html
-
-# Copy application
 COPY . .
 
-# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Apache virtual host
 RUN echo '<VirtualHost *:80>\n\
     DocumentRoot /var/www/html/public\n\
     <Directory /var/www/html/public>\n\
@@ -35,5 +35,4 @@ RUN echo '<VirtualHost *:80>\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
-
 CMD ["apache2-foreground"]
