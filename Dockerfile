@@ -80,5 +80,7 @@ exec apache2-foreground' > /start.sh && chmod +x /start.sh
 # Expose port
 EXPOSE ${PORT:-80}
 
+RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf
+
 # Start Apache with startup script
 CMD ["/start.sh"]
