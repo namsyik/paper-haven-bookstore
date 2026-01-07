@@ -1,8 +1,7 @@
 FROM php:8.2-apache
 
-# Disable all MPMs first, then enable only one
-RUN a2dismod mpm_event mpm_worker mpm_prefork || true
-RUN a2enmod mpm_prefork rewrite
+# Enable rewrite (MPM prefork SUDAH aktif by default)
+RUN a2enmod rewrite
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -19,14 +18,14 @@ WORKDIR /var/www/html
 # Copy application
 COPY . .
 
-# Install dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
-# Configure Apache
+# Apache virtual host
 RUN echo '<VirtualHost *:80>\n\
     DocumentRoot /var/www/html/public\n\
     <Directory /var/www/html/public>\n\
@@ -35,5 +34,6 @@ RUN echo '<VirtualHost *:80>\n\
     </Directory>\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
-# Run migrations and start Apache
-CMD php artisan migrate --force && apache2-foreground
+EXPOSE 80
+
+CMD ["apache2-foreground"]
